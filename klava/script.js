@@ -2,12 +2,13 @@ var box = document.createElement('div');
 box.className = 'box';
 document.body.appendChild(box);
 var textarea = document.createElement('textarea');
-textarea.className = 'textarea';
-textarea.placeholder = "смена раскладки: ctrl+alt. полноценное управление мышкой пока ещё не реализовано, stay tuned";
+textarea.className = "textarea";
+textarea.readOnly = true;
+textarea.placeholder = "смена раскладки: ctrl+alt\nсброс значения каретки - клик вне текстового окна\n\nконтакты для быстрой связи: telegram @VladislavRUS; discord: Владислав#0191";
 document.body.appendChild(textarea);
 class Button {
     constructor(name, id, flag) {
-        this.button = document.createElement('div');
+        this.button = document.createElement('button');
         this.button.className = name;
         box.append(this.button);
         this.button.id = id;
@@ -22,14 +23,13 @@ class Button {
         document.getElementById(this.button.id).style.setProperty('background-color', 'orange')
         if (this.button.flag != 1)
             {
-               
                     var box = document.querySelector("textarea");
                     var cursorPos = box.selectionStart;
                     var textBefore = box.value.substring(0,  cursorPos);
                     var textAfter  = box.value.substring(cursorPos, box.length);
                     box.value = (textBefore + this.button.textContent + textAfter);
                     box.selectionStart = cursorPos + 1;
-                
+                    box.selectionEnd = cursorPos+1;
             }
         else
             { 
@@ -43,6 +43,8 @@ class Button {
                             var textAfter  = box.value.substring(cursorPos, box.length);
                             box.value = (textBefore + textAfter);
                             box.selectionStart = cursorPos-1;
+                            box.selectionEnd = cursorPos-1;
+                            
                         }
                     }
                 if (this.button.id == 14)
@@ -53,6 +55,8 @@ class Button {
                         var textAfter  = box.value.substring(cursorPos, box.length);
                         box.value = (textBefore + "\t" +textAfter);
                         box.selectionStart = cursorPos + 1;
+                        box.selectionEnd = cursorPos+1;
+
                     } 
                 if (this.button.id == 28)
                     {
@@ -62,6 +66,7 @@ class Button {
                         var textAfter  = box.value.substring(cursorPos+1, box.length);
                         box.value = (textBefore + textAfter);
                         box.selectionStart = cursorPos;
+                        box.selectionEnd = cursorPos;
                     } 
                 if (this.button.id == 41)
                     {
@@ -71,6 +76,7 @@ class Button {
                         var textAfter  = box.value.substring(cursorPos, box.length);
                         box.value = (textBefore + '\n' +textAfter);
                         box.selectionStart = cursorPos + 1;
+                        box.selectionEnd = cursorPos+1;
                     } 
                 
             }
@@ -86,10 +92,13 @@ class Button {
     }
     check()
     {
-        if (this.button.big === 1)
-            this.button.textContent = this.button.textContent.toUpperCase();
-        else
-            this.button.textContent = this.button.textContent.toLowerCase();
+        if (this.button.flag != 1) 
+        {
+            if (this.button.big === 1)
+                this.button.textContent = this.button.textContent.toUpperCase();
+            else
+                this.button.textContent = this.button.textContent.toLowerCase();
+        }
     }
     caps()
     {
@@ -321,13 +330,24 @@ window.addEventListener("keydown", function(event) {
     if (event.code == "ShiftRight")
     {
         buttons[54].on(); 
-        if (shift_kostyl == false)
-        {buttons.map((button) => { button.caps();}); 
-        names_shift.forEach(function(name, i) {
-            buttons[i].text(name)
-        })
-        shift_kostyl = true;}
-        else return;
+            if (shift_kostyl == false)
+            {
+                buttons.map((button) => { button.caps();}); 
+                if (lang == 0)
+                {
+                    names_shift.forEach(function(name, i) {
+                        buttons[i].text(name)
+                    })
+                }
+                else
+                {
+                    names_ru_shift.forEach(function(name, i) {
+                        buttons[i].text(name)
+                    })
+                }
+                shift_kostyl = true;
+            }
+            else return;
     }
     if (event.code == "ControlLeft")
         buttons[55].on();
@@ -473,9 +493,18 @@ window.addEventListener("keyup", function(event) {
         buttons[53].off();
     if (event.code == "ShiftRight")
         {buttons[54].off(); buttons.map((button) => { button.caps();});
-        names_unshift.forEach(function(name, i) {
-            buttons[i].text(name)
-        })
+        if (lang == 0)
+            {
+                names_unshift.forEach(function(name, i) {
+                    buttons[i].text(name)
+                })
+            }
+            else
+            {
+                names_ru_unshift.forEach(function(name, i) {
+                    buttons[i].text(name)
+                })
+            }
         shift_kostyl = false;}
     if (event.code == "ControlLeft")
         buttons[55].off();
@@ -496,14 +525,58 @@ window.addEventListener("keyup", function(event) {
     if (event.code == "ControlRight")
         buttons[63].off();
 }, true);
-document.querySelectorAll('div.button').forEach(function(name, i) {
+document.querySelectorAll('button.button').forEach(function(name, i) {
     name.addEventListener('mousedown', event => {
-        console.log(1233123)
-        buttons[i].on();
+        if ((i == 42) || (i == 54))
+            {
+                if (shift_kostyl == false)
+                    {
+                        buttons[i].on();
+                        shift_kostyl = true;
+                        buttons.map((button) => { button.caps();});
+                    }
+                else {
+                    buttons[i].off();
+                    shift_kostyl = false;
+                    buttons.map((button) => { button.caps();});
+                }
+            }
+        else if (i == 29)
+            {
+                if (caps_kostyl == false)
+                    {
+                        buttons[i].on();
+                        caps_kostyl = true;
+                        buttons.map((button) => { button.caps();});
+                    }
+                else {
+                    buttons[i].off();
+                    caps_kostyl = false;
+                    buttons.map((button) => { button.caps();});
+                }
+            }
+        else
+            {
+                buttons[i].on();
+                if (shift_kostyl == true)
+                    buttons.map((button) => { button.caps();});
+                shift_kostyl = false;
+                buttons[42].off();
+                buttons[54].off();
+            }
     })
 })
-document.querySelectorAll('div.button').forEach(function(name, i) {
+document.querySelectorAll('button.button').forEach(function(name, i) {
     name.addEventListener('mouseup', event => {
-        buttons[i].off();
+        if ((i == 42) || (i == 54))
+            {
+            }
+        else if (i == 29)
+            {
+            }
+        else
+            {
+                buttons[i].off();
+            }
     })
 })
