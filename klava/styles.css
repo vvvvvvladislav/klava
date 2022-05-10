@@ -26,6 +26,13 @@
   color: #444444;
 }
 
+.textarea:focus {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
 .change {
   background-color: red;
 }
@@ -33,7 +40,8 @@
 .button {
   height: 40px;
   width: 40px;
-  background-color: grey;
+  background-color: #00008B;
+  font-family: Verdana;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -43,6 +51,8 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  border-radius: 5px;
+  color: white;
 }
 
 .button:hover {
