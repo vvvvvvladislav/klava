@@ -1,0 +1,93 @@
+.box {
+  height: 225px;
+  width: 700px;
+  background-color: hotpink;
+  color: #fff;
+  border: solid 3px black;
+  margin: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 7px;
+  gap: 6px;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -ms-flex-line-pack: start;
+      align-content: start;
+}
+
+.textarea {
+  display: block;
+  width: 700px;
+  height: 200px;
+  margin: 10px auto 10px;
+  padding: 10px;
+  font-size: 18px;
+  color: #444444;
+}
+
+.textarea:focus {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.change {
+  background-color: red;
+}
+
+.button {
+  height: 40px;
+  width: 40px;
+  background-color: #00008B;
+  font-family: Verdana;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 5px;
+  color: white;
+}
+
+.button:hover {
+  background-color: red;
+}
+
+.backspace {
+  width: 102px;
+}
+
+.tab {
+  width: 46px;
+}
+
+.del {
+  width: 50px;
+}
+
+.caps {
+  width: 92px;
+}
+
+.enter {
+  width: 96px;
+}
+
+.shift {
+  width: 92px;
+}
+
+.shift_r {
+  width: 96px;
+}
+
+.space {
+  width: 332px;
+}
+/*# sourceMappingURL=styles.css.map */
